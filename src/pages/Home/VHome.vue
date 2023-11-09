@@ -14,13 +14,18 @@
               :placeholder-value="'Выберите название зверя'"/>
         </div>
       </li>
+      <li class="home__column">
+        <h2 class="home__title">Table component</h2>
+        <VTable :data="tableData"/>
+      </li>
     </ul>
   </section>
 </template>
 
 <script setup>
 import VSelect from "../../components/Select/VSelect.vue";
-import {selectRegions, selectAnimals} from "../../utils/api/data.js";
+import VTable from "../../components/Table/VTable.vue";
+import {selectRegions, selectAnimals, tableData} from "../../utils/api/data.js";
 
 function getAnimalValue(value) {
   console.log(value, "- Animal")
@@ -34,10 +39,11 @@ function getRegionValue(value) {
 <style lang="scss" scoped>
 .home {
   padding-top: 5rem;
+  width: 100%;
   &__container {
-  }
-
-  &__column {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10rem;
   }
 
   &__title {
@@ -48,8 +54,7 @@ function getRegionValue(value) {
 
   &__selects {
     display: flex;
-    align-items: flex-start;
-    column-gap: 2rem;
+    column-gap: 3rem;
   }
 }
 </style>

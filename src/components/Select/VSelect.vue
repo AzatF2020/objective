@@ -30,9 +30,9 @@
 </template>
 
 <script setup>
-  import {ref, defineEmits} from "vue";
+  import {ref, defineEmits, onMounted, onBeforeUnmount} from "vue";
 
-  const emit = defineEmits(["getValue"])
+  const emit = defineEmits(["getValue"]);
   const props = defineProps({
     data: {
       type: Object,
@@ -42,34 +42,44 @@
   })
 
   const labelRef = ref(null);
-  const dropdownRef = ref(null)
-  const dropdownValue = ref("")
-  const dropdownButtons = ref([])
-  const dropdownMaxHeight = ref(0)
+  const dropdownRef = ref(null);
+  const dropdownValue = ref("");
+  const dropdownButtons = ref([]);
+  const dropdownMaxHeight = ref(0);
 
-  let intermediateValue = ref(false)
+  let intermediateValue = ref(false);
 
-  function openModal() {
+  function openDropDown() {
     dropdownMaxHeight.value = dropdownButtons.value?.reduce((accum, element) =>
         accum + Math.floor(Number(element?.offsetHeight / 10) + 2), 0)
   }
 
-  function closeModal() {
+  function closeDropDown() {
     dropdownMaxHeight.value = 0
+  }
+
+  function handleClickOutOfArea(event) {
+    if(!labelRef.value?.contains(event.target) ) {
+      closeDropDown()
+      intermediateValue.value = false
+    }
   }
 
   function getValue(event) {
     dropdownValue.value = event.target?.textContent;
     emit("getValue", dropdownValue.value)
 
-    closeModal()
+    closeDropDown()
     intermediateValue.value = !intermediateValue.value
   }
 
   function toggleDropDown() {
-    !intermediateValue.value ? openModal() : closeModal()
+    !intermediateValue.value ? openDropDown() : closeDropDown()
     intermediateValue.value = !intermediateValue.value
   }
+
+  onMounted(() => window.addEventListener("click", handleClickOutOfArea))
+  onBeforeUnmount(() => window.removeEventListener("click", handleClickOutOfArea))
 </script>
 
 <style lang="scss" scoped>
@@ -158,15 +168,27 @@
     display: flex;
     flex-direction: column;
     max-height: 0;
-    transition: max-height ease .6s, opacity ease .3s, padding-top ease .6s;
-    opacity: 0;
-    border: .15rem solid var(--select-border-color);
+    transition:
+        max-height ease .6s,
+        opacity ease .3s,
+        padding-top ease .6s,
+        border .4s ease;
     border-radius: 0 0 0.75rem 0.75rem;
     overflow: hidden;
+    border: .15rem solid transparent;
+    position: absolute;
+    width: inherit;
+    background-color: white;
+    opacity: 0;
   }
 
   &__dropdown.--active {
-    transition: max-height ease .6s, opacity ease 1s, padding-top ease .6s;
+    transition:
+        max-height ease .6s,
+        opacity ease 1s,
+        padding-top ease .6s,
+        border .4s ease;
+    border: .15rem solid var(--select-border-color);
     opacity: 1;
   }
 
