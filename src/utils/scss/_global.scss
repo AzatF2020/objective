@@ -1,0 +1,17 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  outline: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+html {
+  font-size: 0.68vw;
+  font-family: 'Montserrat', sans-serif;
+}
