@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table class="table">
       <thead>
       <tr>
         <td v-for="header in Object.keys(data[0])">
@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .table {
   border: .01rem solid black;
-  width: 100%;
+  width: 100% !important;
 
   &__header-data-list {
     display: flex;
