@@ -1,18 +1,66 @@
-# Vue 3 + TypeScript + Vite
+# Objective - Тестовое задание
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Технологии:
+- Vue(3) - Composition Api
+- JavaScript
+- Scss
 
-## Recommended IDE Setup
+## Постановка задачи, компонент Select:
+Создать переиспользуемый компонент Select:
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Требования: 
+1) селект должен быть сверстан в соответствие с макетом;
+2) выпадающее меню селекта должно плавно появляться и исчезать по нажатии на стрелку;
+3) стрелка должна переворачиваться когда выпадающее меню открывается/закрывается;
+4) все необходимые данные, а именно список значений, выбранное значение и функция изменения значения передаются в Селект через пропсы;
+5) при выборе значения плейсхолдер должен передвигаться к верхнему левому краю селекта;
+6) задание необходимо написать на Vue (желательно на Composition Api);
 
-## Type Support For `.vue` Imports in TS
+Дополнительные данные:
+- иконка стрелки находится в папке в файле arrowSelect.svg;
+- все рамки селекта сделать цветом #F968bf;
+- цвет текста - #29277d;
+- цвет фона значения при наведении - #DADEFE;
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Компонент Table:
+Задание:
+1) в заголовках колонок хедера есть возможность отсортировать данные. Все значения в таблице должны сортироваться по колонкам при нажатии на стрелки и заголовки колонок по правилам:
+- числовые значения сортируются по возрастанию/убыванию;
+- даты по возрастанию/убыванию;
+- строчные значения по алфавиту.
+2) когда сортируются значения по одному столбику, все остальные отсортированные ранее значения сбрасываются; то есть значения всегда сортируются только по одному критерию;
+3) высота таблицы ограничена и имеет значение 600px;
+4) в таблице должен быть скролл. Хедер при скролле таблицы должен оставаться на месте, все строки скроллятся под хедер;
+5) стрелки сортировки должны стоять рядом с заголовком колонки в хедере таблицы. Иконка активной стрелки должна закрашиваться цветом #29277d;
+6) задание необходимо написать на Vue (желательно на Composition Api).
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Дополнительные данные:
+Заголовки таблицы: 
+- номер (число);
+- девелопер (строка);
+- срок (дата в ISO 8601 формате);
+- тип (строка);
+- этаж (число);
+- площадь (число).
+  
+https://github.com/AzatF2020/objective/assets/104619961/6a2870cf-3df6-4bc6-a165-26d435c18631
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+Проект состоит из двух компонентов в директории /src/components:
+- VSelect;
+- VTable;
+
+Данные лежат в директории /utils/api
+
+### Работа с проектом:
+1. ## Склонировать проект локально:
+``` git clone git@github.com:AzatF2020/objective.git```
+2. ## Установить зависимости:
+``` npm install ```
+3 ## Запустить проект в dev:
+``` npm run dev ```
+
+
+
+
+
+
