@@ -11,14 +11,14 @@
                 ref="buttonsIncrease"
                 :data-value="header"
             >
-              <img src="src/assets/icons/arrowSort.svg" alt="">
+              <img src="../../assets/icons/arrowSort.svg" alt="icon">
             </button>
             <button
                 class="table__header-btn --decrease"
                 :class="{'--active': headerButtonArrowClass(header, 'decrease')}"
                 ref="buttonsDecrease"
                 :data-value="header">
-              <img src="src/assets/icons/arrowSort.svg" alt="">
+              <img src="../../assets/icons/arrowSort.svg" alt="icon">
             </button>
           </div>
         </li>
