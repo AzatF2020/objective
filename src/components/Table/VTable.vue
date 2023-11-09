@@ -1,36 +1,40 @@
 <template>
-  <div class="table">
-    <header class="table__header" ref="tableHeader" :style="{'margin-right': getScrollbarWidth()}">
-      <div class="table__header-data">
-        <div class="table__header-data-list" v-for="header in Object.keys(data[0])">
-          <p class="table__header-text" v-memo="[header]">{{ header }}</p>
-          <div class="table__header-btns">
-            <button
-                class="table__header-btn --increase"
-                :class="{'--active': headerButtonArrowClass(header, 'increase')}"
-                ref="buttonsIncrease"
-                :data-value="header"
-            >
-              <img src="../../assets/icons/arrowSort.svg" alt="icon">
-            </button>
-            <button
-                class="table__header-btn --decrease"
-                :class="{'--active': headerButtonArrowClass(header, 'decrease')}"
-                ref="buttonsDecrease"
-                :data-value="header">
-              <img src="../../assets/icons/arrowSort.svg" alt="icon">
-            </button>
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <td v-for="header in Object.keys(data[0])">
+          <div class="table__header-data-list">
+            <p class="table__header-text" v-memo="[header]">{{ header }}</p>
+            <div class="table__header-btns">
+              <button
+                  class="table__header-btn --increase"
+                  :class="{'--active': headerButtonArrowClass(header, 'increase')}"
+                  ref="buttonsIncrease"
+                  :data-value="header"
+              >
+                <img src="../../assets/icons/arrowSort.svg" alt="icon">
+              </button>
+              <button
+                  class="table__header-btn --decrease"
+                  :class="{'--active': headerButtonArrowClass(header, 'decrease')}"
+                  ref="buttonsDecrease"
+                  :data-value="header">
+                <img src="../../assets/icons/arrowSort.svg" alt="icon">
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
-    </header>
-    <div class="table__columns" ref="tableContent">
-      <div class="table__main">
-        <div class="table__row" v-for="value in filteredData" :key="value.id">
-          <p class="table__value" v-for="key in keys" :key="key">{{ value[key] }}</p>
-        </div>
-      </div>
-    </div>
+        </td>
+      </tr>
+      </thead>
+      <tbody class="table__body">
+      <tr class="table__tr">
+        <td v-for="key in keys" :key="key">
+          <p class="table__value" v-for="value in filteredData" :key="value.id">{{ value[key] }}</p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -46,19 +50,12 @@ const props = defineProps({
 })
 const keys = Object.keys(props?.data[0])
 
-
-const tableHeader = ref(null)
-const tableContent = ref(null)
 const buttonsIncrease = ref([])
 const buttonsDecrease = ref([])
 const buttonValue = ref({
   value: "",
   type: ""
 })
-
-function getScrollbarWidth() {
-  return tableContent?.value?.offsetWidth - tableContent?.value?.clientWidth
-}
 
 const dataTableWithDate = computed(() => props.data.map((item) => {
   return {...item, deadline: new Date(item.deadline).toLocaleDateString('en-GB')}
@@ -85,7 +82,6 @@ onMounted(() => {
   buttonsDecrease?.value.forEach((button) => {
     button.addEventListener("click", () => setButtonValue(button, "decrease"))
   })
-
 })
 
 onBeforeUnmount(() => {
@@ -103,17 +99,10 @@ onBeforeUnmount(() => {
 .table {
   border: .01rem solid black;
 
-  &__header-data {
-    display: grid;
-    grid-auto-columns: minmax(0, 1fr);
-    grid-auto-flow: column;
-
-  }
-
   &__header-data-list {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    column-gap: 1rem;
     border: .1rem solid black;
     padding: 1rem;
   }
@@ -127,6 +116,14 @@ onBeforeUnmount(() => {
   &__header-btns {
     display: flex;
     flex-direction: column;
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  &__tr {
+
   }
 
   &__header-btn {
@@ -149,22 +146,6 @@ onBeforeUnmount(() => {
   }
   &__header-btn.--decrease.--active {
     opacity: 1;
-  }
-
-  &__columns {
-    height: 40rem;
-    overflow-y: auto;
-  }
-
-  &__main {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__row {
-    display: grid;
-    grid-auto-columns: minmax(0, 1fr);
-    grid-auto-flow: column;
   }
 
   &__value {
