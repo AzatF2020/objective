@@ -98,6 +98,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .table {
   border: .01rem solid black;
+  width: 100%;
 
   &__header-data-list {
     display: flex;
