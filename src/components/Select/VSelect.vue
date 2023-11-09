@@ -122,7 +122,7 @@
       top: 50%;
       transform: translateY(-50%);
       transition: .4s ease transform;
-      background-image: url("src/assets/icons/arrowSelect.svg");
+      background-image: url("../../assets/icons/arrowSelect.svg");
     }
   }
 
