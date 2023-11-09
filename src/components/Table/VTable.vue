@@ -145,7 +145,7 @@ import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 
   &__columns {
     height: 40rem;
-    overflow: auto;
+    overflow-y: auto;
   }
 
   &__main {
