@@ -43,7 +43,9 @@
 - этаж (число);
 - площадь (число).
   
-https://github.com/AzatF2020/objective/assets/104619961/6a2870cf-3df6-4bc6-a165-26d435c18631
+
+https://github.com/AzatF2020/objective/assets/104619961/b73092f3-683d-4930-a1c6-3d1a68f18954
+
 
 Проект состоит из двух компонентов в директории /src/components:
 - VSelect;
