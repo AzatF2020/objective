@@ -123,6 +123,8 @@
       transform: translateY(-50%);
       transition: .4s ease transform;
       background-image: url("../../assets/icons/arrowSelect.svg");
+      background-repeat: no-repeat;
+      background-size: cover;
     }
   }
 
