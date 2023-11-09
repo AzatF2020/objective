@@ -1,8 +1,8 @@
 <template>
   <div class="table">
-    <header class="table__header">
-      <ul class="table__header-data">
-        <li class="table__header-data-list" v-for="header in Object.keys(data[0])">
+    <header class="table__header" ref="tableHeader" :style="{'margin-right': getScrollbarWidth()}">
+      <div class="table__header-data">
+        <div class="table__header-data-list" v-for="header in Object.keys(data[0])">
           <p class="table__header-text" v-memo="[header]">{{ header }}</p>
           <div class="table__header-btns">
             <button
@@ -21,74 +21,82 @@
               <img src="../../assets/icons/arrowSort.svg" alt="icon">
             </button>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </header>
-    <div class="table__columns">
-      <ul class="table__main">
-        <li class="table__row" v-for="value in filteredData" :key="value.id">
+    <div class="table__columns" ref="tableContent">
+      <div class="table__main">
+        <div class="table__row" v-for="value in filteredData" :key="value.id">
           <p class="table__value" v-for="key in keys" :key="key">{{ value[key] }}</p>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import {computed, onBeforeUnmount, onMounted, ref} from "vue";
-  import useTableFilter from "../../utils/hooks/useTableFilter.js";
+import useTableFilter from "../../utils/hooks/useTableFilter.js";
 
-  const props = defineProps({
-    data: {
-      type: Array,
-      required: true,
-    }
-  })
-  const keys = Object.keys(props?.data[0])
-
-  const buttonsIncrease = ref([])
-  const buttonsDecrease = ref([])
-  const buttonValue = ref({
-    value: "",
-    type: ""
-  })
-
-  const dataTableWithDate = computed(() => props.data.map((item) => {
-    return {...item, deadline: new Date(item.deadline).toLocaleDateString('en-GB')}
-  }))
-
-  const { filteredData } = useTableFilter(dataTableWithDate, buttonValue)
-
-  function headerButtonArrowClass(header, type) {
-    return buttonValue.value.value === header && buttonValue.value.type === type
+const props = defineProps({
+  data: {
+    type: Array,
+    required: true,
   }
+})
+const keys = Object.keys(props?.data[0])
 
-  function setButtonValue(button, type) {
-    buttonValue.value = {
-      value: button?.dataset.value,
-      type: type
-    }
+
+const tableHeader = ref(null)
+const tableContent = ref(null)
+const buttonsIncrease = ref([])
+const buttonsDecrease = ref([])
+const buttonValue = ref({
+  value: "",
+  type: ""
+})
+
+function getScrollbarWidth() {
+  return tableContent?.value?.offsetWidth - tableContent?.value?.clientWidth
+}
+
+const dataTableWithDate = computed(() => props.data.map((item) => {
+  return {...item, deadline: new Date(item.deadline).toLocaleDateString('en-GB')}
+}))
+
+const { filteredData } = useTableFilter(dataTableWithDate, buttonValue)
+
+function headerButtonArrowClass(header, type) {
+  return buttonValue.value.value === header && buttonValue.value.type === type
+}
+
+function setButtonValue(button, type) {
+  buttonValue.value = {
+    value: button?.dataset.value,
+    type: type
   }
+}
 
-  onMounted(() => {
-    buttonsIncrease?.value.forEach((button) => {
-      button.addEventListener("click", () => setButtonValue(button, "increase"))
-    })
-
-    buttonsDecrease?.value.forEach((button) => {
-      button.addEventListener("click", () => setButtonValue(button, "decrease"))
-    })
+onMounted(() => {
+  buttonsIncrease?.value.forEach((button) => {
+    button.addEventListener("click", () => setButtonValue(button, "increase"))
   })
 
-  onBeforeUnmount(() => {
-    buttonsIncrease?.value.forEach((button) => {
-      button.removeEventListener("click", () => setButtonValue(button, "increase"))
-    })
-
-    buttonsDecrease?.value.forEach((button) => {
-      button.removeEventListener("click", () => setButtonValue(button, "decrease"))
-    })
+  buttonsDecrease?.value.forEach((button) => {
+    button.addEventListener("click", () => setButtonValue(button, "decrease"))
   })
+
+})
+
+onBeforeUnmount(() => {
+  buttonsIncrease?.value.forEach((button) => {
+    button.removeEventListener("click", () => setButtonValue(button, "increase"))
+  })
+
+  buttonsDecrease?.value.forEach((button) => {
+    button.removeEventListener("click", () => setButtonValue(button, "decrease"))
+  })
+})
 </script>
 
 <style lang="scss" scoped>
